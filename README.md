@@ -1,48 +1,6 @@
 # Bob Barker the Bot
 This bot is made for a private discord. Basically a meme-machine. Please do not let any employers find it. I'll get fired.
 
-
-# Listade commands for botten för att niklas orkar inte ;)
-
-*Brought to you buy a friendly neighbourhood carragher*
-
-
-```
--	!nutted
--	!cum
--	!spook
--	!blyat
--	!huggies
--	!owo
--	!cummies
--	!boi
--	!radio
--	!kittn
--	!seinfeld
--	!curb
--	!fuck
--	!retarded
--	!cummotion
--	!succ
--	!nice
--	!mandarin
--	!crump
--	!gay
--	!juwul
--	!coom
--	!uwu
--	!shitdrill
--	!play
--	!flås
--	!inga
-```
-
-
-```
-I. AM. A. ROBOT. FROM. THE. FUTURE.
-I. AM. HERE. TO. TAKE. AMERICAN. JOBS!.
-```
-
-```
-BLEEP. BLOOP. MAGGOT
-```
+# Bob Barker 2.0
+Bob is now powered by ~5 versions newer discord.js. He is less depraved, but is now slightly less prone to crashes as long as nobody interacts with him!
+Also includes more sad cats, less comments and less spam!
