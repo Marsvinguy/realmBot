@@ -1,15 +1,21 @@
-const cats = ["sadcat1.jpg", "sadcat2.png", "sadcat3.jpg", "sadcat4.jpg", "sadcat5.jpg", "sadcat6.jpg", "sadcat7.jpg", "sadcat8.jpg", "sadcat9.jpg", "sadcat10.jpg", "sadcat11.png"];
-const {EmbedBuilder, AttachmentBuilder, MessagePayload} = require('discord.js');
+const {AttachmentBuilder, ChatInputCommandInteraction} = require('discord.js');
+const fs = require("node:fs");
+
 module.exports = { 
-    async cat(err, interaction) {
+    async cat(err, interaction = ChatInputCommandInteraction) {
         console.log(err);
         if(interaction) {
-            var cat = cats[Math.floor(Math.random() * cats.length)];
-            const file = new AttachmentBuilder(cat);
-            interaction.reply({content: err  , files: [file], ephemeral: false, tts: false});
-            
+            try{
+                const cats = fs.readdirSync(__dirname + "\\cats\\");
+                var cat = __dirname + "\\cats\\" + cats[Math.floor(Math.random() * cats.length)];
+                const file = new AttachmentBuilder(cat);
+                await interaction.followUp({content: err, files: [file], ephemeral: false, tts: false});
+            } catch(error) {
+                console.log("Borken is borken?!: " + error);
+                await interaction.followUp({content: "Borken is borken?!", ephemeral: false, tts: false})
+            }
+
         }
-    
-    }
-    
+        return;
+    }  
 }

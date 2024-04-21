@@ -12,6 +12,7 @@ for(const file of commandFolder) {
     const filePath = path.join(folderPath, file);
     const command = require(filePath);
     if("data" in command && "execute" in command) {
+		console.log("Added command: " + command.data.name);
         commands.push(command.data.toJSON());
     } else {
         console.log('Deploy found faulty command at ${filePath}');

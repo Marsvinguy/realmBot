@@ -1,11 +1,13 @@
 const config = require("./auth.json");
 const borken = require(__dirname+"\\borken.js");
-const { Client, Collection, Events, GatewayIntentBits, MessagePayload, EmbedBuilder } = require('discord.js');
+const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 
 const fs = require('node:fs');
 const path = require('node:path');
 
-const bob = new Client({ intents: [GatewayIntentBits.Guilds] });
+const commandChannel = "1156580744177660008";
+
+const bob = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates] });
 
 bob.on(Events.ClientReady, ready => {
     console.log("Bob is ready!");
@@ -28,27 +30,22 @@ for(const file of commandFolder) {
 }
 
 bob.on(Events.InteractionCreate, async interaction => {
-    if (!interaction.isChatInputCommand()) return;
+    if(!interaction.isChatInputCommand()) return;
+    //if(interaction.channelId != commandChannel) return;
     const command = interaction.client.commands.get(interaction.commandName);
 
     if(!command) {
         //interaction.reply(interaction.commandName + ' är inte ett command, ' + haddock());
-        borken.cat(interaction.commandName + " är inte ett kommando", interaction);
+        await borken.cat(interaction.commandName + " är inte ett kommando", interaction);
         return;
     }
     try {
+        console.log("Before " + interaction.commandName);
         await command.execute(interaction);
+        console.log("After " + interaction.commandName);
     } catch(error) {
-        borken.cat(command.name + " gick fel", interaction);
+        await borken.cat(interaction.commandName  + " gick fel, error: " + error, interaction);
     }
 });
-
-function haddock() {
-	//http://www.nissepedia.com/index.php/Kapten_Haddocks_samlade_svordomar
-	var fraser = ["ditt murmeldjur","ditt enögda murmeldjur", "din sjögurka", "din apsvansade analfabet", "din amöba", "din blåkullatomte", "ditt blötdjur", "din bondlurk", "din deghög", "din drummel", "din dyngspridare", "ditt eländiga kryp", "din enögda kannibal", "din erbarmliga plattfot", "din fähund", "din fega ynkrygg", "din fåntratt", "ditt fördömda kräk", "din förpiskade luspudel", "din gamla knölsvan", "din gnom", "din grobian", "din grottmänniska", "din huggormsavföda", "din idiot", "din insjögangster", "ditt jäkla odjur", "ditt kloakdjur", "din kloakråtta", "din kramsfågelmördare", "din kryddkrämare", "din luspudel", "din lymmel", "din ockrare", "din odugling", "din parasit", "din pestråtta", "din pillerbagge", "din pottsork", "din pyromanapa", "din råttsvans", "ditt rötägg", "din sakramentskade sumprunkare", "din sladderfågel", "din sillmjölk", "din skabbhals", "din skabbråtta", "din skurk", "ditt skunkdjur", "ditt slyn-yngel", "din snorvalp", "din sopprot", "din soppråtta", "din sötvattenspirat", "din tjockskalle", "din tjurskalle", "ditt tryffelsvin", "din tångräka", "din usling", "din vagabond", "din vandal", "din vegetarian", "din vidriga apmänniska", "din vidriga varulv", "din vinlus", "din vrakplundrare", "din vrålapa", "ditt vårtsvin", "din åsneskalle", "din ärkebandit", "din ärkelögnare", "ditt bjäbbande spöke ", "din blodsugare", "ditt kreatur"];
-	var rand = fraser[Math.floor(Math.random() * fraser.length)];
-	return rand;
-
-}
 
 bob.login(config.token);
